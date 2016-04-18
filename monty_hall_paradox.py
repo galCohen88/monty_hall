@@ -16,7 +16,7 @@ SELECTION_IDX = 1
 
 
 # this will prove the existence of the paradox
-# WITH RESULT OF 0.5 AFTER REPLACING THE PLAYER CHOICE
+# WITH RESULT OF 0.666 AFTER REPLACING THE PLAYER CHOICE
 
 def run(number_of_games, replace_choose_after_choice_curtain_extraction, number_of_curtains=3):
     """
