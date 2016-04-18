@@ -1,7 +1,7 @@
 from random import randint
 
 # configuration (for your choice)
-NUMBER_OF_GAMES = 100000
+NUMBER_OF_GAMES = 1000000
 PLAYER_REPLACE_CURTAINS = True
 
 # constants
@@ -46,11 +46,7 @@ def monty_hall_game(number_of_curtains, replace_choose_after_choice_curtain_extr
 
     first_player_pick_idx = randint(0, len(curtains) - 1)
     curtains[first_player_pick_idx][SELECTION_IDX] = CURTAIN_SELECTED_BY_PLAYER
-    while len(curtains) > 2:
-        for curtain in curtains:
-            if curtain[SELECTION_IDX] == CURTAIN_NOT_SELECTED_BY_PLAYER and curtain[SCORE_IDX] == GOAT_BEHIND_CURTAIN_REWARD:
-                curtains.remove(curtain)
-
+    curtains = remove_curtain(curtains)
     first_selection_new_index = -1
     for i, curtain in enumerate(curtains):
         if curtain[SELECTION_IDX] == CURTAIN_SELECTED_BY_PLAYER:
@@ -58,9 +54,18 @@ def monty_hall_game(number_of_curtains, replace_choose_after_choice_curtain_extr
 
     if replace_choose_after_choice_curtain_extraction:
         curtains[first_selection_new_index][SELECTION_IDX] = CURTAIN_NOT_SELECTED_BY_PLAYER
-        second_player_pick_idx = randint(0, len(curtains) - 1)
+        second_player_pick_idx = randint(0, len(curtains) - 2)
         curtains[second_player_pick_idx][SELECTION_IDX] = CURTAIN_SELECTED_BY_PLAYER
     return calculate_game_result(curtains)
+
+
+def remove_curtain(curtains):
+    while len(curtains) > 2:
+        remove_idx = randint(0, len(curtains) - 1)
+        if curtains[remove_idx][SELECTION_IDX] == CURTAIN_NOT_SELECTED_BY_PLAYER and \
+                        curtains[remove_idx][SCORE_IDX] == GOAT_BEHIND_CURTAIN_REWARD:
+            del curtains[remove_idx]
+    return curtains
 
 
 def calculate_game_result(curtains):
@@ -70,4 +75,5 @@ def calculate_game_result(curtains):
     return 0
 
 
-print 'player won {0}% of the games'.format((run(NUMBER_OF_GAMES, 3, PLAYER_REPLACE_CURTAINS) / float(NUMBER_OF_GAMES))*100)
+print 'player won {0}% of the games'.format(
+    (run(NUMBER_OF_GAMES, 3, PLAYER_REPLACE_CURTAINS) / float(NUMBER_OF_GAMES)) * 100)
