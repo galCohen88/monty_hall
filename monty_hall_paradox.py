@@ -54,7 +54,7 @@ def monty_hall_game(number_of_curtains, replace_choose_after_choice_curtain_extr
 
     if replace_choose_after_choice_curtain_extraction:
         curtains[first_selection_new_index][SELECTION_IDX] = CURTAIN_NOT_SELECTED_BY_PLAYER
-        second_player_pick_idx = randint(0, len(curtains) - 2)
+        second_player_pick_idx = 1 if first_selection_new_index == 0 else 0
         curtains[second_player_pick_idx][SELECTION_IDX] = CURTAIN_SELECTED_BY_PLAYER
     return calculate_game_result(curtains)
 
