@@ -1,4 +1,3 @@
-from __future__ import print_function
 import pickle
 import os.path
 from googleapiclient.discovery import build
@@ -39,8 +38,7 @@ def main():
         message_id = message.get('id')
         message = service.users().messages().get(userId=USER_ID, id=message_id).execute()
         message_content = message['payload']['parts'][0]['body']['data']
-        b64_decoded = base64.urlsafe_b64decode(message_content)
-        raw_html = str(b64_decoded, 'utf-8')
+        raw_html = str(base64.urlsafe_b64decode(message_content), 'utf-8')
         print(raw_html)
 
 
